@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE configuration   
+    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 打开控制开关 在mybatis3.2.2 以上不需要此设置
+	 <settings> <setting name="logImpl" value="LOG4J" /> </settings> -->
+	 <settings>
+	 	<setting name="lazyLoadingEnabled" value="true"/>
+		<setting name="aggressiveLazyLoading" value="false"/>
+	 </settings>
+	<typeAliases>
+		<!--给实体类起一个别名 user -->
+		<typeAlias type="demo.entity.Student" alias="Student" />
+		<typeAlias type="demo.entity.Teacher" alias="Teacher" />
+		<typeAlias type="demo.entity.User" alias="User" />
+		<typeAlias type="demo.entity.Group" alias="Group" />
+		<typeAlias type="demo.entity.UserGroupLink" alias="UserGroupLink" />
+		
+
+	</typeAliases>
+
+	<!-- <mappers> -->
+	<!-- <mapper resource="mapper/StudentMapper.xml" /> -->
+	<!-- </mappers> -->
+	
+</configuration> 

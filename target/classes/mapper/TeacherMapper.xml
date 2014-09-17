@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="demo.mapper.TeacherMapper">
+
+	<!--教师-1对多-学生实体映射 =======嵌套的resultMap=============== -->
+	<resultMap id="teacherMap" type="Teacher">
+		<id property="id" column="t_id" />
+		<result property="name" column="t_name" />
+		<result property="gender" column="t_gender" />
+		<result property="researchArea" column="t_research_area" />
+		<result property="title" column="t_title" />
+	</resultMap>
+	<resultMap id="teacherResultMap" type="Teacher" extends="teacherMap">
+		<collection property="students" ofType="Student" resultMap="demo.mapper.StudentMapper.studentResultMap1" />
+	</resultMap>
+	<!-- 
+	<resultMap id="studentMap" type="Student">
+		<id property="id" column="s_id" />
+		<result property="name" column="s_name" />
+		<result property="gender" column="s_gender" />
+		<result property="major" column="s_major" />
+		<result property="grade" column="s_grade" />
+		<result property="supervisor" column="s_supervisor_id" />
+	</resultMap> -->
+
+	<sql id="Base_Column_List">
+		student.s_id,
+		student.s_name,
+		student.s_gender,
+		student.s_major,
+		student.s_grade,
+		student.s_supervisor_id,
+		teacher.t_name,
+		teacher.t_gender,
+		teacher.t_research_area,
+		teacher.t_title,
+		teacher.t_id
+	</sql>
+	<select id="getTeacherByID" parameterType="string" resultMap="teacherResultMap">
+		SELECT *
+<!-- 		<include refid="Base_Column_List" /> -->
+		FROM
+		teacher
+		LEFT JOIN student ON teacher.t_id = student.s_supervisor_id
+		WHERE
+		teacher.t_id=#{id}
+	</select>
+	
+	<!-- 使用#{param1.title}的形式就能访问Map中title属性的值。当然，在order by子句中应使用${param1.sort}的形式 -->
+	<select id="findTeacherByPage" resultMap="teacherResultMap">
+		SELECT 
+		<include refid="Base_Column_List" />
+		FROM
+		teacher
+		INNER JOIN student ON teacher.t_id = student.s_supervisor_id
+		ORDER BY #{param1} #{param2} limit #{param3},#{param4}
+	</select>
+	
+	<!-- 测试Spring事务在保存时出错是否回 -->
+	<insert id="insertTeachers" parameterType="java.util.List">
+		insert into teacher(t_id)<!-- , t_name, t_gender, t_research_area,t_title -->
+		values
+		<foreach collection="list" item="item" index="index" separator=",">
+			(#{item.id})<!-- ,#{item.name},#{item.gender},#{item.researchArea},#{item.title} -->
+		</foreach>
+	</insert>
+</mapper>
