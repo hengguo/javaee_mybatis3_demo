@@ -1,5 +1,6 @@
 package demo.mapper;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Repository;
@@ -16,5 +17,9 @@ public interface UserMapper {
 	public User selectUserGroup(Long id);
 	
 	public void updateUser(User user);
+	
+	public void batchInsert(List<User> list);
+	
+	public void insert(User user);
 
 }

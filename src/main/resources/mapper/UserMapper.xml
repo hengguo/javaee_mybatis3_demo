@@ -61,4 +61,18 @@
       where u_id=#{id}
     </update>
 
+ <insert id="batchInsert" parameterType="java.util.List">
+      insert into user (u_id) 
+      VALUES
+      <foreach collection="list" item="item" separator=",">
+        (#{item.id})
+      </foreach>
+  </insert>
+  
+  <insert id="insert" parameterType="User">
+    INSERT INTO
+      user(u_id)
+    VALUES 
+      (#{id});
+  </insert>
 </mapper>

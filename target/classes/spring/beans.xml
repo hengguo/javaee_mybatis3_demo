@@ -13,7 +13,7 @@
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
 		destroy-method="close">
 		<property name="driverClass" value="com.mysql.jdbc.Driver"></property>
-		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/test?characterEncoding=utf8&amp;zeroDateTimeBehavior=convertToNull"></property>
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/test?characterEncoding=utf8&amp;zeroDateTimeBehavior=convertToNull&amp;allowMultiQueries=true"></property>
 		<property name="user" value="root"></property>
 		<property name="password" value="root"></property>
 		<property name="minPoolSize"><value>1</value></property>
@@ -55,9 +55,11 @@
 			<!--所有以find开头的方法都是只读的 -->
 			<tx:method name="get*" read-only="true" />
 			<tx:method name="find*" read-only="true" />
-			<tx:method name="save*" />
+			<tx:method name="save*"  propagation="REQUIRED"  />
+            <tx:method name="insert*" propagation="REQUIRED" />
+            <tx:method name="add*"  propagation="REQUIRED"  />
 			<!--其他方法使用默认事务策略 -->
-<!-- 			<tx:method name="*" /> -->
+			<tx:method name="*" />
 		</tx:attributes>
 	</tx:advice>
 

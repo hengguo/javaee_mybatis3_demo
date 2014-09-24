@@ -85,4 +85,15 @@
 		insert into student(s_id) values
 			(#{id})
 	</insert>
+  <update id="updateBatch"  parameterType="java.util.List">
+      
+          <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+                update student 
+                <set>
+                  s_grade = #{item.grade}
+                </set>
+                where s_id = #{item.id}
+         </foreach>
+          
+    </update>
 </mapper>

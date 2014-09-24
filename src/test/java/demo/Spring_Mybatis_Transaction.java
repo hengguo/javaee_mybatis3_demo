@@ -1,16 +1,9 @@
 package demo;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import demo.entity.Student;
-import demo.entity.Teacher;
-import demo.mapper.StudentMapper;
-import demo.mapper.TeacherMapper;
-import demo.service.TeacherService;
+import demo.service.UserService;
 
 /**
  * Mybatis 事务的控制
@@ -30,8 +23,8 @@ public class Spring_Mybatis_Transaction {
 //		teachers.add(t1);
 //		teachers.add(t2);
 //		teacherMapper.insertTeachers(teachers);
-		TeacherService teacherDao = (TeacherService) ac.getBean("teacherService");
-		teacherDao.saveTeacher();
+		UserService userService = (UserService) ac.getBean("userService");
+		userService.addUser1();
 	}
 
 }

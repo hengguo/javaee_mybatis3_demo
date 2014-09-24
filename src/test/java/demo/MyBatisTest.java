@@ -1,9 +1,9 @@
 package demo;
 
-import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
@@ -33,9 +33,15 @@ public class MyBatisTest {
 
 	public static void main(String[] args) {
 		SqlSession sqlSession = getSessionFactory().openSession();
-		StudentMapper userMapper = sqlSession.getMapper(StudentMapper.class);
-		Student s = userMapper.getById1("23638175452758017");
-		System.out.println(s.getSupervisor().getName());
+		StudentMapper studentMapper = sqlSession.getMapper(StudentMapper.class);
+		List<Student> list = new ArrayList<Student>();
+		Student s1 = new Student();s1.setId("23638175452758016");s1.setName("AAA");
+		Student s2 = new Student();s2.setId("23638175452758017");s2.setName("BBB");
+		list.add(s1);list.add(s2);
+		
+		studentMapper.updateBatch(list);
+//		Student s = userMapper.getById1("23638175452758017");
+//		System.out.println(s.getSupervisor().getName());
 
 	}
 
