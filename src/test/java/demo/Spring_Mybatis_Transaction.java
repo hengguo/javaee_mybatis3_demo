@@ -2,6 +2,9 @@ package demo;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.dao.DataAccessException;
+
+import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 
 import demo.service.UserService;
 
@@ -24,7 +27,19 @@ public class Spring_Mybatis_Transaction {
 //		teachers.add(t2);
 //		teacherMapper.insertTeachers(teachers);
 		UserService userService = (UserService) ac.getBean("userService");
-		userService.addUser1();
+		try{
+			userService.addUser1();
+		}catch(DataAccessException  e){
+			if(e.getCause() instanceof MySQLIntegrityConstraintViolationException)
+				System.out.println("11111111111111111111111111-----------------------------");
+			else 
+				e.printStackTrace();
+		}
+		try{
+			userService.addUser2();
+		}catch(Exception e){
+			System.out.println("222222222222222222222222-----------------------------");
+		}
 	}
 
 }

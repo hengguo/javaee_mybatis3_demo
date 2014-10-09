@@ -7,6 +7,8 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
+
 import demo.entity.User;
 import demo.mapper.UserMapper;
 
@@ -22,7 +24,7 @@ public class UserService {
 	 */
 	public void addUser1(){
 		
-		addUser2();
+//		addUser2();
 		List list = new ArrayList<User>();
 		User u1 = new User();
 		u1.setId(Long.valueOf(99));

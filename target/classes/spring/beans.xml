@@ -30,7 +30,7 @@
 	<!-- 扫描注解Bean 自动扫描的包名 -->
     <context:component-scan base-package="demo.service, demo.mapper"/>
 	
-	<!-- 配置mybatisSqlSessionFactoryBean -->
+	<!-- 配置mybatiskBean -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="mapperLocations" value="classpath:mapper/*.xml" />
 		<property name="typeAliasesPackage" value="demo.entity" />
@@ -71,5 +71,12 @@
 		<!--将定义好的事务处理策略应用到上述的切入点 -->
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="myPointcut" />
 	</aop:config>
+  
+  <aop:config>
+    <aop:pointcut expression="" id="pointcut1"/>
+    <aop:aspect  ref="aspectDemo">
+      <aop:around method="log" pointcut-ref="pointcut1"/>
+    </aop:aspect>
+  </aop:config>
 	
 </beans>
